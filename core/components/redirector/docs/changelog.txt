@@ -1,5 +1,9 @@
 Changelog file for Redirector component.
 
+Redirector 2.0.1
+====================================
+- Fixed saving MODX link tag as valid value for target
+
 Redirector 2.0.0
 ====================================
 - New feature: possibility to import from CSV files and raw data

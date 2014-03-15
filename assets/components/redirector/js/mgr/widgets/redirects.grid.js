@@ -15,6 +15,12 @@ Redi.grid.Redirects = function(config) {
         ,baseParams: { action: 'mgr/redirect/getList' }
         ,fields: ['id','pattern','target','context_key','valid','resource_id','resource_ctx','active']
         ,save_action: 'mgr/redirect/updateFromGrid'
+        ,save_callback: function(r) {
+            if(!r.success) {
+                Ext.MessageBox.alert(_('error'), r.data[0].msg);
+                this.refresh();
+            }
+        }
         ,autosave: true
         ,paging: true
         ,remoteSort: true
@@ -91,7 +97,45 @@ Redi.grid.Redirects = function(config) {
     Redi.grid.Redirects.superclass.constructor.call(this,config)
 };
 Ext.extend(Redi.grid.Redirects,MODx.grid.Grid,{
-    search: function(tf,nv,ov) {
+    saveRecord: function(e) {
+        e.record.data.menu = null;
+        var p = this.config.saveParams || {};
+        Ext.apply(e.record.data,p);
+        var d = Ext.util.JSON.encode(e.record.data);
+        var url = this.config.saveUrl || (this.config.url || this.config.connector);
+
+        MODx.Ajax.request({
+            url: url
+            ,params: {
+                action: this.config.save_action || 'updateFromGrid'
+                ,data: d
+            }
+            ,listeners: {
+                'failure': {fn:function(r) {
+                    if (this.config.save_callback) {
+                        Ext.callback(this.config.save_callback,this.config.scope || this,[r]);
+                    }
+                    this.fireEvent('afterAutoSave',r);
+                    if (!this.config.preventSaveRefresh) {
+                        this.refresh();
+                    }
+                } ,scope:this }
+                ,'success': {fn:function(r) {
+                    if (this.config.save_callback) {
+                        Ext.callback(this.config.save_callback,this.config.scope || this,[r]);
+                    }
+                    e.record.commit();
+                    if (!this.config.preventSaveRefresh) {
+                        this.refresh();
+                    }
+                    this.fireEvent('afterAutoSave',r);
+                },scope:this}
+            }
+        });
+    }
+
+
+    ,search: function(tf,nv,ov) {
         var s = this.getStore();
             s.baseParams.query = tf.getValue();
         this.getBottomToolbar().changePage(1);
