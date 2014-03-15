@@ -7,6 +7,11 @@ class RedirectorGetListProcessor extends modObjectGetListProcessor {
     public $defaultSortField = 'pattern ASC, target';
     public $defaultSortDirection = 'ASC';
 
+    public function initialize() {
+        $this->modx->getParser();
+        return parent::initialize();
+    }
+
     public function prepareQueryBeforeCount(xPDOQuery $c) {
 
         $query = $this->getProperty('query');
@@ -47,15 +52,22 @@ class RedirectorGetListProcessor extends modObjectGetListProcessor {
         }
 
         // OR target not exists
-        if(!strpos($arr['target'], '://') && !strpos($arr['target'], '$')) {
-            $criteria = array('uri' => $object->get('target'));
-            if(!empty($arr['context_key'])) {
-                $criteria['context_key'] = $object->get('context_key');
-            }
+        $target = $arr['target'];
+        if(!strpos($target, '$')) {
 
-            $resource = $this->modx->getObject('modResource', $criteria);
-            if(empty($resource) || !is_object($resource)) {
-                $arr['valid'] = false;
+            $this->modx->parser->processElementTags('', $target, true, true);
+
+            if(!strpos($target, '://')) {
+
+                $criteria = array('uri' => $target);
+                if(!empty($arr['context_key'])) {
+                    $criteria['context_key'] = $object->get('context_key');
+                }
+
+                $resource = $this->modx->getObject('modResource', $criteria);
+                if(empty($resource) || !is_object($resource)) {
+                    $arr['valid'] = false;
+                }
             }
         }
 
