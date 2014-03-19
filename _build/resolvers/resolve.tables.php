@@ -5,20 +5,35 @@
  * @package redirector
  * @subpackage build
  */
-if ($object->xpdo) {
-    switch ($options[xPDOTransport::PACKAGE_ACTION]) {
-        case xPDOTransport::ACTION_INSTALL:
-            $modx =& $object->xpdo;
-            $modelPath = $modx->getOption('redirector.core_path',null,$modx->getOption('core_path').'components/redirector/').'model/';
-            $modx->addPackage('redirector',$modelPath);
 
-            $manager = $modx->getManager();
+$modx =& $object->xpdo;
 
-            $manager->createObjectContainer('modRedirect');
+$modx->log(xPDO::LOG_LEVEL_INFO, 'Creating database tables.');
+switch ($options[xPDOTransport::PACKAGE_ACTION]) {
+    case xPDOTransport::ACTION_INSTALL:
+    case xPDOTransport::ACTION_UPGRADE:
 
-            break;
-        case xPDOTransport::ACTION_UPGRADE:
-            break;
-    }
+        $modelPath = $modx->getOption('redirector.core_path',null,$modx->getOption('core_path').'components/redirector/').'model/';
+        $modx->addPackage('redirector',$modelPath);
+
+        // to not report table creation in the console
+        $oldLogLevel = $modx->getLogLevel();
+        $modx->setLogLevel(0);
+
+        $manager = $modx->getManager();
+
+        $manager->createObjectContainer('modRedirect');
+
+        // set back console logging
+        $modx->setLogLevel($oldLogLevel);
+
+    break;
+
+    case xPDOTransport::ACTION_UNINSTALL:
+
+        $manager->removeObjectContainer('modRedirect');
+
+    break;
 }
+
 return true;

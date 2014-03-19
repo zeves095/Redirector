@@ -6,16 +6,24 @@ $modx->log(xPDO::LOG_LEVEL_INFO, 'Making database changes.');
 switch($options[xPDOTransport::PACKAGE_ACTION]) {
 	case xPDOTransport::ACTION_INSTALL:
 	case xPDOTransport::ACTION_UPGRADE:
-		
-		$modx =& $object->xpdo;
-		$modelPath = $modx->getOption('redirector.core_path', null, $modx->getOption('core_path').'components/redirector/').'model/';
+
+        $modelPath = $modx->getOption('redirector.core_path', null, $modx->getOption('core_path').'components/redirector/').'model/';
 		$modx->addPackage('redirector', $modelPath);
-		
-		$manager = $modx->getManager();
-		
+
+        $manager = $modx->getManager();
+
+        // to not report table creation in the console
+        $oldLogLevel = $modx->getLogLevel();
+        $modx->setLogLevel(0);
+
 		$manager->addField('modRedirect', 'context_key', array('after' => 'target'));
-        $manager->addIndex('modRedirect', 'pattern_context');
-        $manager->removeIndex('modRedirect', 'pattern');
+
+        $manager->addIndex('modRedirect', 'pattern');
+        $manager->addIndex('modRedirect', 'context_key');
+        $manager->removeIndex('modRedirect', 'pattern_context');
+
+        // set back console logging
+        $modx->setLogLevel($oldLogLevel);
 
         // update controller location
         $modAction = $modx->getObject('modAction', array('namespace' => 'redirector', 'controller' => 'index'));

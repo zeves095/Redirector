@@ -1,7 +1,7 @@
 <?php
 $xpdo_meta_map['modRedirect']= array (
   'package' => 'redirector',
-  'version' => NULL,
+  'version' => '1.0',
   'table' => 'redirects',
   'extends' => 'xPDOSimpleObject',
   'fields' => 
@@ -21,7 +21,6 @@ $xpdo_meta_map['modRedirect']= array (
       'null' => false,
       'default' => '',
       'index' => 'index',
-      'indexgrp' => 'pattern_context',
     ),
     'target' => 
     array (
@@ -40,7 +39,6 @@ $xpdo_meta_map['modRedirect']= array (
       'null' => true,
       'default' => NULL,
       'index' => 'index',
-      'indexgrp' => 'pattern_context',
     ),
     'active' => 
     array (
@@ -51,31 +49,6 @@ $xpdo_meta_map['modRedirect']= array (
       'null' => false,
       'default' => 1,
       'index' => 'index',
-    ),
-  ),
-  'indexes' => 
-  array (
-    'pattern_context' => 
-    array (
-      'alias' => 'pattern_context',
-      'primary' => false,
-      'unique' => true,
-      'type' => 'BTREE',
-      'columns' => 
-      array (
-        'pattern' => 
-        array (
-          'length' => '100',
-          'collation' => 'A',
-          'null' => false,
-        ),
-        'context_key' => 
-        array (
-          'length' => '100',
-          'collation' => 'A',
-          'null' => false,
-        ),
-      ),
     ),
   ),
   'aggregates' => 

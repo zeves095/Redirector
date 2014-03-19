@@ -1,6 +1,6 @@
 <?php
 /**
- * Default Dutch Lexicon Entries for redirector
+ * Default Dutch Lexicon Entries for Redirector
  *
  * @package redirector
  * @subpackage lexicon
@@ -11,9 +11,12 @@ $_lang['redirector.desc'] = 'Beheer verwijzingen voor je website. Rode regels be
 $_lang['redirector.nothing_found'] = 'Nog geen verwijzingen gevonden!';
 $_lang['redirector.description'] = 'Beschrijving';
 $_lang['redirector.redirect_err_ae'] = 'Er bestaat al een verwijzing met deze naam.';
+$_lang['redirector.redirect_err_ae_patctx'] = 'Een verwijzing met dit patroon en "[[+context]]" context bestaat reeds.';
+$_lang['redirector.redirect_err_ae_uri'] = 'De URI bestaat reeds voor resource [[+id]] in "[[+context]]" context... Verwijzing zal niet werken!';
 $_lang['redirector.redirect_err_nf'] = 'Verwijzing niet gevonden.';
 $_lang['redirector.redirect_err_ns'] = 'Verwijzing niet gespecificeerd.';
 $_lang['redirector.redirect_err_ns_name'] = 'Specificeer een naam voor de verwijzing.';
+$_lang['redirector.redirect_err_ne_target'] = 'Doel URI bestaat niet... Verwijzing zal niet werken!';
 $_lang['redirector.redirect_err_remove'] = 'Er is een fout opgetreden bij het verwijderen van de verwijzing.';
 $_lang['redirector.redirect_err_save'] = 'Er is een fout opgetreden bij het opslaan van de verwijzing.';
 $_lang['redirector.redirect_create'] = 'Cre&euml;er Nieuwe Verwijzing';
@@ -38,3 +41,17 @@ $_lang['redirector.import.do'] = 'Start Import!';
 $_lang['redirector.import.doing'] = 'Bezig met importeren CSV data...';
 $_lang['redirector.import.success'] = 'Totaal [[+total]] records gevonden. Geimporteerd: [[+succeed]] met succes en [[+failed]] mislukt!';
 $_lang['redirector.import.failed'] = 'Mislukt CSV te importeren... Probeer het nog eens!';
+
+$_lang['redirector.regex_explain'] = 'U kunt ook reguliere expressies gebruiken in het patroon en de waarden hiervan gebruiken in het doel URL.
+
+Ter voorbeeld; stel u heeft veel oude URLs als "shop/category-{name}/" en u wilt deze doorverwijzen naar de nieuwe URL structuur: "webshop/{name}/". Geen probleem!
+Vul het volgende in:
+
+<b>Patroon:</b> ^shop\/category-(.*)\/$
+<b>Doel:</b> webshop/$1/
+
+U kunt ook meerdere wildcards (.*) toevoegen en gebruik dan $2, $3 etc. En zoals u kunt zien moet u forward slashes escapen en gebruik ^ voor de start en $ voor het eind van een regel.';
+
+// settings
+$_lang['setting_redirector.track_uri_updates'] = 'Track URI Updates';
+$_lang['setting_redirector.track_uri_updates_desc'] = 'Indien ingeschakeld dan zal bij wijzigingen in Resource URIs automatisch een redirect gemaakt worden van oud > nieuw.';
