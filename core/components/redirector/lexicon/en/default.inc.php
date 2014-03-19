@@ -1,6 +1,6 @@
 <?php
 /**
- * Default English Lexicon Entries for redirector
+ * Default English Lexicon Entries for Redirector
  *
  * @package redirector
  * @subpackage lexicon
@@ -11,9 +11,13 @@ $_lang['redirector.desc'] = 'Manage redirects for your website. Red lines means 
 $_lang['redirector.nothing_found'] = 'No redirects found yet!';
 $_lang['redirector.description'] = 'Description';
 $_lang['redirector.redirect_err_ae'] = 'A redirect with that name already exists.';
+$_lang['redirector.redirect_err_ae_pattern'] = 'A redirect with this pattern already exists.';
+$_lang['redirector.redirect_err_ae_patctx'] = 'A redirect with this pattern and "[[+context]]" context already exists.';
+$_lang['redirector.redirect_err_ae_uri'] = 'URI already exists for Resource ID [[+id]] in "[[+context]]" context... Redirect will not work!';
 $_lang['redirector.redirect_err_nf'] = 'Redirect not found.';
 $_lang['redirector.redirect_err_ns'] = 'Redirect not specified.';
 $_lang['redirector.redirect_err_ns_name'] = 'Please specify a name for the redirect.';
+$_lang['redirector.redirect_err_ne_target'] = 'Target URI doesn\'t exists... Redirect won\'t work...';
 $_lang['redirector.redirect_err_remove'] = 'An error occurred while trying to remove the redirect.';
 $_lang['redirector.redirect_err_save'] = 'An error occurred while trying to save the redirect.';
 $_lang['redirector.redirect_create'] = 'Create New Redirect';

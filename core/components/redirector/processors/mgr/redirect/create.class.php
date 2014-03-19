@@ -12,29 +12,35 @@ class RedirectorCreateProcessor extends modObjectCreateProcessor {
         }
         $context = $this->getProperty('context_key');
 
+        // check if pattern & context combi not already exists
+        $exists = $this->modx->getObject('modRedirect', array('pattern' => $this->getProperty('pattern'), 'context_key' => $context));
+        if(!empty($exists) && is_object($exists)) {
+            $this->addFieldError('pattern', $this->modx->lexicon('redirector.'.((empty($context)) ? 'redirect_err_ae_pattern' : 'redirect_err_ae_patctx'), array('context' => $context)));
+        }
+
         // check if pattern is an existing resource
         $criteria = array('uri' => $this->getProperty('pattern'));
         if(!empty($context)) { $criteria['context_key'] = $context; }
         $resource = $this->modx->getObject('modResource', $criteria);
         if(!empty($resource) && is_object($resource)) {
-            $this->addFieldError('pattern', 'URI exists for Resource ID '.$resource->get('id').' in "'.$resource->get('context_key').'" context... Redirect will not work!');
+            $this->addFieldError('pattern', $this->modx->lexicon('redirector.redirect_err_ae_resource', array('id' => $resource->get('id'), 'context' => $resource->get('context_key'))));
         }
 
         // check if target is a NON existing resource
         $target = $this->getProperty('target');
-        if(!strpos($target, '$')) {
+        if(!strpos($target, '$') && !strpos($target, '://')) {
 
-            $this->modx->getParser();
-            $this->modx->parser->processElementTags('', $target, true, true);
+            // DEPRECATED: because target should not contain any MODX tags anymore
+            if(stripos($target, '[[') !== false) {
+                $this->modx->getParser();
+                $this->modx->parser->processElementTags('', $target, true, true);
+            }
 
-            if(!strpos($target, '://')) {
-
-                $criteria = array('uri' => $target);
-                if(!empty($context)) { $criteria['context_key'] = $context; }
-                $resource = $this->modx->getObject('modResource', $criteria);
-                if(empty($resource) || !is_object($resource)) {
-                    $this->addFieldError('target', 'Resource doesn\'t exists! Redirect won\'t work...');
-                }
+            $criteria = array('uri' => $target);
+            if(!empty($context)) { $criteria['context_key'] = $context; }
+            $resource = $this->modx->getObject('modResource', $criteria);
+            if(empty($resource) || !is_object($resource)) {
+                $this->addFieldError('target', $this->modx->lexicon('redirector.redirect_err_ne_target'));
             }
         }
 
