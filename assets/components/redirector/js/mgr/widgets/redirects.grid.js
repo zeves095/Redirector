@@ -9,17 +9,41 @@ Redi.grid.Redirects = function(config) {
         ,onMouseDown: this.saveCheckbox
     });
 
+    var exp = new Ext.grid.RowExpander({
+        tpl: new Ext.Template('<p style="margin-top: 8px">{failure_msg}</p>')
+        ,renderer: function(v, p, record){
+            return record.get('failure_msg').length > 0 ? '<div class="x-grid3-row-expander">&#160;</div>' : '&#160;';
+        }
+        ,getRowClass : function(record, rowIndex, p, ds){
+            p.cols = p.cols-1;
+            var content = this.bodyContent[record.id];
+            if(!content && !this.lazyRender){
+                content = this.getBodyContent(record, rowIndex);
+            }
+            if(content){
+                p.body = content;
+            }
+
+            var cls = this.state[record.id] ? 'x-grid3-row-expanded' : 'x-grid3-row-collapsed';
+                cls += ' ' + ((!record.data.valid) ? 'grid-row-invalid' : 'grid-row-valid');
+            return cls;
+        }
+        ,expandOnEnter: false
+        ,expandOnDblClick: false
+        ,enableCaching: false
+    });
+
     Ext.applyIf(config,{
         id: 'redirector-grid-redirects'
         ,url: Redi.config.connector_url
         ,baseParams: { action: 'mgr/redirect/getList' }
-        ,fields: ['id','pattern','target','context_key','valid','resource_id','resource_ctx','active']
+        ,fields: ['id','pattern','target','context_key','valid','failure_msg','active']
         ,save_action: 'mgr/redirect/updateFromGrid'
         ,save_callback: function(r) {
             if(!r.success) {
                 Ext.MessageBox.alert(_('error'), r.data[0].msg);
-                this.refresh();
             }
+            this.refresh();
         }
         ,autosave: true
         ,paging: true
@@ -30,17 +54,13 @@ Redi.grid.Redirects = function(config) {
             ,scrollOffset: 0
             ,autoFill: true
             ,showPreview: true
-            ,getRowClass : function(rec){
-                var cls = ((!rec.data.valid) ? 'grid-row-invalid' : 'grid-row-valid');
-                return cls;
-            }
             ,emptyText: _('redirector.nothing_found')
         }
 
         ,anchor: '97%'
         ,autoExpandColumn: 'name'
-        ,plugins: [cb]
-        ,columns: [{
+        ,plugins: [exp, cb]
+        ,columns: [exp, {
             header: _('id')
             ,dataIndex: 'id'
             ,sortable: true
@@ -283,12 +303,14 @@ Redi.window.CreateUpdateRedirect = function(config) {
                         ,items: [{
                             xtype: 'redirector-combo-resourcelist'
                             ,fieldLabel: _('resource')
+                            ,valueField: 'uri'
+                            ,fields: ['uri','pagetitle']
                             ,anchor: '100%'
                             ,listeners: {
                                 'select': {
                                     fn: function(cb, e) {
                                         var targetField = Ext.getCmp('redirector-createupdate-window-target-'+this.ident);
-                                            targetField.setValue('[[~' + cb.getValue() + ']]');
+                                            targetField.setValue(cb.getValue());
                                     } ,scope: this
                                 }
                             }

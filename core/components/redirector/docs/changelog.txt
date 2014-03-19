@@ -1,5 +1,13 @@
 Changelog file for Redirector component.
 
+Redirector 2.0.2
+====================================
+- Added grid row expander to show errors against pattern and target URIs
+- Updated Lexicon files with new entries (not yet translated, help needed!)
+- Improved setting target to resource URI (instead of id) on resource selection
+- Added checks on pattern & context combination. Should be unique
+- Fixed unique index on db columns pattern and context_key, length is not respected by xPDO
+
 Redirector 2.0.1
 ====================================
 - Fixed saving MODX link tag as valid value for target

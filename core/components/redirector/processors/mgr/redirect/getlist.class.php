@@ -34,9 +34,9 @@ class RedirectorGetListProcessor extends modObjectGetListProcessor {
 
     public function prepareRow(xPDOObject $object) {
         $arr = $object->toArray();
+
+        $arr['failure_msg'] = '';
         $arr['valid'] = true;
-        $arr['resource_id'] = '';
-        $arr['resource_ctx'] = '';
 
         // find out if pattern URI exists
         $criteria = array('uri' => $object->get('pattern'));
@@ -46,8 +46,8 @@ class RedirectorGetListProcessor extends modObjectGetListProcessor {
 
         $resource = $this->modx->getObject('modResource', $criteria);
         if(!empty($resource) && is_object($resource)) {
-            $arr['resource_id'] = $resource->get('id');
-            $arr['resource_ctx'] = $resource->get('context_key');
+            //$arr['failure_msg'] = 'Pattern URL exists for Resource ID '.$resource->get('id').' in context '.$resource->get('context_key').'. Redirect won\'t work!';
+            $arr['failure_msg'] .= '(!) '.$this->modx->lexicon('redirector.pattern').' '.$this->modx->lexicon('redirector.redirect_err_ae_uri', array('id' => $resource->get('id'), 'context' => $resource->get('context_key')));
             $arr['valid'] = false;
         }
 
@@ -66,6 +66,7 @@ class RedirectorGetListProcessor extends modObjectGetListProcessor {
 
                 $resource = $this->modx->getObject('modResource', $criteria);
                 if(empty($resource) || !is_object($resource)) {
+                    $arr['failure_msg'] .= ((!empty($arr['failure_msg'])) ? '<br/>' : '').'(!) '.$this->modx->lexicon('redirector.redirect_err_ne_target');
                     $arr['valid'] = false;
                 }
             }
