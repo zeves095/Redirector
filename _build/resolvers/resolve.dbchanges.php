@@ -4,7 +4,7 @@ $modx =& $object->xpdo;
 
 $modx->log(xPDO::LOG_LEVEL_INFO, 'Making database changes.');
 switch($options[xPDOTransport::PACKAGE_ACTION]) {
-	case xPDOTransport::ACTION_INSTALL:
+	//case xPDOTransport::ACTION_INSTALL:
 	case xPDOTransport::ACTION_UPGRADE:
 
         $modelPath = $modx->getOption('redirector.core_path', null, $modx->getOption('core_path').'components/redirector/').'model/';
@@ -33,4 +33,11 @@ switch($options[xPDOTransport::PACKAGE_ACTION]) {
         }
 
 	break;
+
+    case xPDOTransport::ACTION_UNINSTALL:
+        $setting = $modx->getObject('modSystemSetting', array('key' => 'track_alias_updates'));
+        if(!empty($setting) && is_object($setting)) {
+            $setting->remove();
+        }
+    break;
 }
