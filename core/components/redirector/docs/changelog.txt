@@ -1,5 +1,13 @@
 Changelog file for Redirector component.
 
+Redirector 2.0.3
+====================================
+- New feature: including (relative) file support for redirection
+- Fixed: using the right setting key in the Redirector plugin
+- Fixed: broken unsinstall tables without having db manager instance
+- Updated Russian translation (Thanks to @danyaPostfactum)
+- Updated Frensch translation (Thanks to @rtripault)
+
 Redirector 2.0.2
 ====================================
 - Added grid row expander to show errors against pattern and target URIs
