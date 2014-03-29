@@ -34,7 +34,13 @@ class RedirectorUpdateProcessor extends modObjectUpdateProcessor {
             if(!empty($context)) { $criteria['context_key'] = $context; }
             $resource = $this->modx->getObject('modResource', $criteria);
             if(empty($resource) || !is_object($resource)) {
-                $this->addFieldError('target', $this->modx->lexicon('redirector.redirect_err_ne_target'));
+
+                // check if could be a file?
+                $basePath = $this->modx->getOption('base_path');
+                if(!file_exists($basePath.$target)) {
+
+                    $this->addFieldError('target', $this->modx->lexicon('redirector.redirect_err_ne_target'));
+                }
             }
         }
 
