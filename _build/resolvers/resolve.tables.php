@@ -16,11 +16,11 @@ switch ($options[xPDOTransport::PACKAGE_ACTION]) {
         $modelPath = $modx->getOption('redirector.core_path',null,$modx->getOption('core_path').'components/redirector/').'model/';
         $modx->addPackage('redirector',$modelPath);
 
+        $manager = $modx->getManager();
+
         // to not report table creation in the console
         $oldLogLevel = $modx->getLogLevel();
         $modx->setLogLevel(0);
-
-        $manager = $modx->getManager();
 
         $manager->createObjectContainer('modRedirect');
 
@@ -31,7 +31,16 @@ switch ($options[xPDOTransport::PACKAGE_ACTION]) {
 
     case xPDOTransport::ACTION_UNINSTALL:
 
+        $manager = $modx->getManager();
+
+        // to not report table creation in the console
+        $oldLogLevel = $modx->getLogLevel();
+        $modx->setLogLevel(0);
+
         $manager->removeObjectContainer('modRedirect');
+
+        // set back console logging
+        $modx->setLogLevel($oldLogLevel);
 
     break;
 }

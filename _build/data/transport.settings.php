@@ -2,7 +2,7 @@
 
 $s = array(
     'Manager' => array(
-        'track_alias_updates' => false,
+        'track_uri_updates' => false,
     ),
 );
 
