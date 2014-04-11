@@ -52,7 +52,7 @@ class RedirectorGetListProcessor extends modObjectGetListProcessor {
 
         // OR target not exists
         $target = $this->getProperty('target');
-        if(!strpos($target, '$')) {
+        if(strpos($target, '$') === false) {
 
             // parse link & MODX tags
             if(stripos($target, '[[') !== false) {

@@ -27,7 +27,7 @@ class RedirectorUpdateProcessor extends modObjectUpdateProcessor {
 
         // check if target is a NON existing resource
         $target = $this->getProperty('target');
-        if(!strpos($target, '$')) {
+        if(strpos($target, '$') === false) {
 
             // parse link & MODX tags
             if(stripos($target, '[[') !== false) {
