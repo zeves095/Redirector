@@ -12,7 +12,12 @@ class RedirectorHomeManagerController extends RedirectorManagerController {
 
         $this->addJavascript($this->redirector->config['jsUrl'].'mgr/widgets/redirects.grid.js');
         $this->addJavascript($this->redirector->config['jsUrl'].'mgr/widgets/home.panel.js');
-        $this->addLastJavascript($this->redirector->config['jsUrl'].'mgr/sections/index.js');
+        $this->addJavascript($this->redirector->config['jsUrl'].'mgr/sections/index.js');
+        $this->addHtml('<script type="text/javascript">
+        Ext.onReady(function() {
+            MODx.load({ xtype: "redirector-page-home"});
+        });
+        </script>');
     }
 
     public function getTemplateFile() { return $this->redirector->config['templatesPath'].'home.tpl'; }

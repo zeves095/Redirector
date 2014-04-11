@@ -51,29 +51,41 @@ class RedirectorGetListProcessor extends modObjectGetListProcessor {
         }
 
         // OR target not exists
-        $target = $arr['target'];
-        if(!strpos($target, '$')) {
+        $target = $this->getProperty('target');
+        if(strpos($target, '$') === false) {
 
-            $this->modx->parser->processElementTags('', $target, true, true);
+            // parse link & MODX tags
+            if(stripos($target, '[[') !== false) {
+                $this->modx->parser->processElementTags('', $target, true, true);
+            }
 
-            if(!strpos($target, '://')) {
+            if(!empty($target)) {
 
-                $criteria = array('uri' => $target);
-                if(!empty($arr['context_key'])) {
-                    $criteria['context_key'] = $object->get('context_key');
-                }
+                // checking full links
+                if(strpos($target, '://') !== false) {
 
-                $resource = $this->modx->getObject('modResource', $criteria);
-                if(empty($resource) || !is_object($resource)) {
-
-                    // check if could be a file?
-                    $basePath = $this->modx->getOption('base_path');
-                    if(!file_exists($basePath.$target)) {
-
-                        $arr['failure_msg'] .= ((!empty($arr['failure_msg'])) ? '<br/>' : '').'(!) '.$this->modx->lexicon('redirector.redirect_err_ne_target');
-                        $arr['valid'] = false;
+                    $headers = @get_headers($target);
+                    if(empty($headers)) {
+                        $this->addFieldError('target', $this->modx->lexicon('redirector.redirect_err_ne_target'));
                     }
                 }
+                else {
+
+                    $criteria = array('uri' => $target);
+                    if(!empty($context)) { $criteria['context_key'] = $context; }
+                    $resource = $this->modx->getObject('modResource', $criteria);
+                    if(empty($resource) || !is_object($resource)) {
+
+                        // check if could be a file?
+                        $basePath = $this->modx->getOption('base_path');
+                        if(!file_exists($basePath.$target)) {
+                            $this->addFieldError('target', $this->modx->lexicon('redirector.redirect_err_ne_target'));
+                        }
+                    }
+                }
+            }
+            else {
+                $this->addFieldError('target', $this->modx->lexicon('redirector.redirect_err_ne_target'));
             }
         }
 
