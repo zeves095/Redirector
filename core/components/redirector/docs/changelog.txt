@@ -1,5 +1,10 @@
 Changelog file for Redirector component.
 
+Redirector 2.0.4
+====================================
+- Fixed: entering and checking MODX link tags
+- Fixed: parsed full urls are now got validated by PHP get_headers().
+
 Redirector 2.0.3
 ====================================
 - New feature: including (relative) file support for redirection
