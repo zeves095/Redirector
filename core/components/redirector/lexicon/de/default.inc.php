@@ -4,54 +4,57 @@
  *
  * @package redirector
  * @subpackage lexicon
+ * @author smooth-graphics (Anselm Hannemann)
+ * Redirector translated to German by Jan-Christoph Ihrens (enigmatic_user, enigma@lunamail.de)
  */
 $_lang['redirector'] = 'Redirector';
 $_lang['redirector.active'] = 'Aktiv';
-$_lang['redirector.desc'] = 'Verwalten Sie Umleitungen für Ihre Webseite. Die roten Linien bedeuten, dass das URL Muster noch existiert ODER dass das Ziel-Url für die Ressource nicht existiert und nicht weitergeleitet wird';
-$_lang['redirector.nothing_found'] = 'No redirects found yet!';
+$_lang['redirector.desc'] = 'Verwalten Sie Umleitungen für Ihre Webseite. Die roten Linien bedeuten, dass die Muster-URL noch existiert ODER dass die Ziel-URL für keine Ressource existiert und nicht weitergeleitet wird';
+$_lang['redirector.nothing_found'] = 'Noch keine Umleitungen gefunden!';
 $_lang['redirector.description'] = 'Beschreibung';
 $_lang['redirector.redirect_err_ae'] = 'Es existiert bereits eine Umleitung mit diesem Namen.';
-$_lang['redirector.redirect_err_ae_patctx'] = 'A redirect with this pattern and "[[+context]]" context already exists.';
-$_lang['redirector.redirect_err_ae_uri'] = 'URI already exists for Resource ID [[+id]] in "[[+context]]" context... Redirect will not work!';
+$_lang['redirector.redirect_err_ae_pattern'] = 'Eine Umleitung mit diesem Muster existiert bereits.';
+$_lang['redirector.redirect_err_ae_patctx'] = 'Eine Umleitung mit diesem Muster und dem Kontext "[[+context]]" existiert bereits.';
+$_lang['redirector.redirect_err_ae_uri'] = 'Die URL existiert bereits für die Ressource mit der ID [[+id]] im Kontext "[[+context]]". Die Umleitung wird nicht funktionieren!';
 $_lang['redirector.redirect_err_nf'] = 'Umleitung nicht gefunden.';
-$_lang['redirector.redirect_err_ns'] = 'Keine Umleitung erstellt.';
+$_lang['redirector.redirect_err_ns'] = 'Keine Umleitung angegeben.';
 $_lang['redirector.redirect_err_ns_name'] = 'Bitte geben Sie einen Namen für die Umleitung an.';
-$_lang['redirector.redirect_err_ne_target'] = 'Target URI doesn\'t exists... Redirect won\'t work...';
-$_lang['redirector.redirect_err_remove'] = 'Es ist ein Fehler beim Entfernen der Umleitung aufgetreten.';
-$_lang['redirector.redirect_err_save'] = 'Es ist ein Fehler beim Speichern der Umleitung aufgetreten.';
-$_lang['redirector.redirect_create'] = 'neue Umleitung erstellen';
+$_lang['redirector.redirect_err_ne_target'] = 'Die Ziel-URL existiert nicht. Die Umleitung wird nicht funktionieren.';
+$_lang['redirector.redirect_err_remove'] = 'Es ist ein Fehler aufgetreten beim Versuch, die Umleitung zu entfernen.';
+$_lang['redirector.redirect_err_save'] = 'Es ist ein Fehler aufgetreten beim Versuch, die Umleitung zu speichern.';
+$_lang['redirector.redirect_create'] = 'Neue Umleitung erstellen';
 $_lang['redirector.redirect_remove'] = 'Umleitung entfernen';
-$_lang['redirector.redirect_remove_confirm'] = 'Sind Sie sicher, dass Sie die Umleitung entfernen möchten?';
+$_lang['redirector.redirect_remove_confirm'] = 'Sind Sie sicher, dass Sie diese Umleitung entfernen möchten?';
 $_lang['redirector.redirect_update'] = 'Umleitung bearbeiten';
 $_lang['redirector.redirects'] = 'Umleitungen';
-$_lang['redirector.management'] = 'Umleitungsverwaltung';
+$_lang['redirector.management'] = 'Umleitungs-Verwaltung';
 $_lang['redirector.menu_desc'] = 'Verwalten Sie Umleitungen für Ihre Webseite.';
 $_lang['redirector.pattern'] = 'Muster';
 $_lang['redirector.search...'] = 'Suche...';
 $_lang['redirector.target'] = 'Ziel';
-$_lang['redirector.context'] = 'Context';
-$_lang['redirector.context_desc'] = 'If context is set, redirect only affects on loaded context.';
+$_lang['redirector.context'] = 'Kontext';
+$_lang['redirector.context_desc'] = 'Wenn ein Kontext ausgewählt wurde, wirkt sich die Umleitung nur auf den geladenen Kontext aus.';
 
-$_lang['redirector.import'] = 'Import CSV';
-$_lang['redirector.import_desc'] = 'Here you can import new rules provided in CSV format. You can upload a CSV file or past raw CSV format in the textarea below';
-$_lang['redirector.import.csv_desc'] = 'Notice: format of the CSV must be "pattern;target;context", where "context" may be skipped or empty.<br/>Also; use relative URLs, not include [[+site_url]] or similar ones.';
-$_lang['redirector.import.csv_file'] = 'CSV File selection';
-$_lang['redirector.import.raw_csv'] = 'Paste raw CSV data here';
-$_lang['redirector.import.do'] = 'Start Import!';
-$_lang['redirector.import.doing'] = 'Busy with importing CSV data...';
-$_lang['redirector.import.success'] = 'Total [[+total]] records found. Imported: [[+succeed]] successful and [[+failed]] failed!';
-$_lang['redirector.import.failed'] = 'Failed importing CSV data... Try again!';
+$_lang['redirector.import'] = 'CSV importieren';
+$_lang['redirector.import_desc'] = 'Hier können Sie neue Regeln importieren, die im CSV-Format vorliegen. Sie können eine CSV-Datei hochladen oder Text im CSV-Format in das untenstehende Textfeld kopieren.';
+$_lang['redirector.import.csv_desc'] = 'Hinweis: Die CSV-Daten müssen im Format "Muster;Ziel;Kontext" vorliegen, wobei "Kontext" ausgelassen werden oder leer sein kann.<br />Verwenden Sie außerdem relative URLs; [[+site_url]] oder Ähnliches darf nicht enthalten sein.';
+$_lang['redirector.import.csv_file'] = 'CSV-Datei-Auswahl';
+$_lang['redirector.import.raw_csv'] = 'Kopieren Sie Text im CSV-Format hier hinein';
+$_lang['redirector.import.do'] = 'Import starten!';
+$_lang['redirector.import.doing'] = 'Importiere CSV-Daten...';
+$_lang['redirector.import.success'] = 'Insgesamt [[+total]] Einträge gefunden. Importiert: [[+succeed]] erfolgreich und [[+failed]] fehlgeschlagen!';
+$_lang['redirector.import.failed'] = 'Der Import von CSV-Daten ist fehlgeschlagen. Versuchen Sie es bitte erneut!';
 
-$_lang['redirector.regex_explain'] = 'You can use regular expressions in the pattern and retrieve your replacements back in your target URL.
+$_lang['redirector.regex_explain'] = 'Sie können reguläre Ausdrücke in den Mustern verwenden und Referenzen auf geklammerte Teilausdrücke in Ihrer Ziel-URL verwenden.
 
-For example; you have many old URLs like "shop/category-{name}/" and you want to redirect all those URLs to the new "webshop/{name}/" structure, no problem!
-Enter these values:
+Wenn Sie z.B. viele alte URLs nach dem Muster "shop/category-{name}/" haben und alle diese URLs zu der neuen Struktur "webshop/{name}/" umleiten möchten: kein Problem!
+Geben Sie diese Werte ein:
 
-<b>Pattern:</b> ^shop\/category-(.*)\/$
-<b>Target:</b> webshop/$1/
+<b>Muster:</b> ^shop\/category-(.*)\/$
+<b>Ziel:</b> webshop/$1/
 
-You can also apply more wildcards (.*) and use $2, $3 etc. And as you can see, you need to escape the forward slashes and define a ^ for the start and $ for the end position.';
+Sie können auch weitere Teilausdrücke in Klammern (.*) setzen und $2, $3 etc. verwenden, um sie zu referenzieren. Und wie Sie sehen können, müssen Sie Slashes (/) "entwerten", indem Sie ihnen jeweils einen Backslash voranstellen, und das Zeichen ^ für den Beginn und das Zeichen $ für das Ende des Musters verwenden.';
 
 // settings
-$_lang['setting_redirector.track_uri_updates'] = 'Track URI Updates';
-$_lang['setting_redirector.track_uri_updates_desc'] = 'If enabled, this will keep track on resource URI updates. Automatically created redirects for old > new URIs.';
+$_lang['setting_redirector.track_uri_updates'] = 'URL-Änderungen verfolgen';
+$_lang['setting_redirector.track_uri_updates_desc'] = 'Wenn diese Einstellung auf "Ja" steht, werden Änderungen von Ressourcen-URLs verfolgt. Bei einer Änderung wird automatisch eine Umleitung von der alten zur neuen URL angelegt.';

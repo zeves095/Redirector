@@ -17,7 +17,7 @@ $_lang['redirector.redirect_err_ae_uri'] = 'URI already exists for Resource ID [
 $_lang['redirector.redirect_err_nf'] = 'Redirect not found.';
 $_lang['redirector.redirect_err_ns'] = 'Redirect not specified.';
 $_lang['redirector.redirect_err_ns_name'] = 'Please specify a name for the redirect.';
-$_lang['redirector.redirect_err_ne_target'] = 'Target URI doesn\'t exists... Redirect won\'t work...';
+$_lang['redirector.redirect_err_ne_target'] = 'Target URI doesn\'t exist... Redirect won\'t work...';
 $_lang['redirector.redirect_err_remove'] = 'An error occurred while trying to remove the redirect.';
 $_lang['redirector.redirect_err_save'] = 'An error occurred while trying to save the redirect.';
 $_lang['redirector.redirect_create'] = 'Create New Redirect';
@@ -34,7 +34,7 @@ $_lang['redirector.context'] = 'Context';
 $_lang['redirector.context_desc'] = 'If context is set, redirect only affects on loaded context.';
 
 $_lang['redirector.import'] = 'Import CSV';
-$_lang['redirector.import_desc'] = 'Here you can import new rules provided in CSV format. You can upload a CSV file or past raw CSV format in the textarea below';
+$_lang['redirector.import_desc'] = 'Here you can import new rules provided in CSV format. You can upload a CSV file or paste raw CSV format in the textarea below.';
 $_lang['redirector.import.csv_desc'] = 'Notice: format of the CSV must be "pattern;target;context", where "context" may be skipped or empty.<br/>Also; use relative URLs, do not include [[+site_url]] or similar ones.';
 $_lang['redirector.import.csv_file'] = 'CSV File selection';
 $_lang['redirector.import.raw_csv'] = 'Paste raw CSV data here';
@@ -55,4 +55,4 @@ You can also apply more wildcards (.*) and use $2, $3 etc. And as you can see, y
 
 // settings
 $_lang['setting_redirector.track_uri_updates'] = 'Track URI Updates';
-$_lang['setting_redirector.track_uri_updates_desc'] = 'If enabled, this will keep track on resource URI updates. Automatically created redirects for old > new URIs.';
+$_lang['setting_redirector.track_uri_updates_desc'] = 'If enabled, this will keep track on resource URI updates. Automatically creates redirects for old > new URIs.';
