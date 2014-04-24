@@ -32,6 +32,9 @@ $_lang['redirector.search...'] = 'Search...';
 $_lang['redirector.target'] = 'Target';
 $_lang['redirector.context'] = 'Context';
 $_lang['redirector.context_desc'] = 'If context is set, redirect only affects on loaded context.';
+$_lang['redirector.triggered'] = 'Triggered';
+$_lang['redirector.triggered_first'] = 'First time triggered';
+$_lang['redirector.triggered_last'] = 'Last time triggered';
 
 $_lang['redirector.import'] = 'Import CSV';
 $_lang['redirector.import_desc'] = 'Here you can import new rules provided in CSV format. You can upload a CSV file or paste raw CSV format in the textarea below.';

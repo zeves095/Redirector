@@ -34,6 +34,9 @@ $_lang['redirector.search...'] = 'Suche...';
 $_lang['redirector.target'] = 'Ziel';
 $_lang['redirector.context'] = 'Kontext';
 $_lang['redirector.context_desc'] = 'Wenn ein Kontext ausgewählt wurde, wirkt sich die Umleitung nur auf den geladenen Kontext aus.';
+$_lang['redirector.triggered'] = 'Triggered';
+$_lang['redirector.triggered_first'] = 'First time triggered';
+$_lang['redirector.triggered_last'] = 'Last time triggered';
 
 $_lang['redirector.import'] = 'CSV importieren';
 $_lang['redirector.import_desc'] = 'Hier können Sie neue Regeln importieren, die im CSV-Format vorliegen. Sie können eine CSV-Datei hochladen oder Text im CSV-Format in das untenstehende Textfeld kopieren.';

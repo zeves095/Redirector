@@ -14,53 +14,35 @@ switch($eventName) {
         /* handle redirects */
         $search = $_SERVER['REQUEST_URI'];
         $baseUrl = $modx->getOption('base_url',null,MODX_BASE_URL);
-        if (!empty($baseUrl) && $baseUrl != '/' && $baseUrl != ' ' && $baseUrl != '/'.$modx->context->get('key').'/') {
+        if(!empty($baseUrl) && $baseUrl != '/' && $baseUrl != ' ' && $baseUrl != '/'.$modx->context->get('key').'/') {
             $search = str_replace($baseUrl,'',$search);
         }
+
         $search = ltrim($search,'/');
-        $extPos = strrpos($search, '.');
-        if ($extPos) {
-            if ($search) {
+        if(!empty($search)) {
 
-                $redirect = $modx->getObject('modRedirect', array(
-                    "(`modRedirect`.`pattern` = '".$search."' OR '".$search."' REGEXP `modRedirect`.`pattern`)",
-                    "(`modRedirect`.`context_key` = '".$modx->context->get('key')."' OR `modRedirect`.`context_key` IS NULL OR `modRedirect`.`context_key` = '')",
-                    'active' => true,
-                ));
-
-                if ($redirect) {
-                    $target = $redirect->get('target');
-                    $modx->parser->processElementTags('', $target, true, true);
-                    if ($target != $modx->resourceIdentifier && $target != $search) {
-                        if (strpos($target, '$') !== false) {
-                            $pattern = $redirect->get('pattern');
-                            $target = preg_replace('/'.$pattern.'/', $target, $search);
-                        }
-                        if (!strpos($target, '://')) {
-                            $target = $modx->getOption('site_url').$target;
-                        }
-                        $modx->log(modX::LOG_LEVEL_INFO, 'Redirector plugin redirecting request for ' . $search . ' to ' . $target);
-
-                        $options = array('responseCode' => 'HTTP/1.1 301 Moved Permanently');
-                        $modx->sendRedirect($target, $options);
-                    }
-                }
-            }
-
-            $search = substr($search, 0, $extPos);
-        }
-
-        if ($search) {
-
+            /** @var modRedirect $redirect */
             $redirect = $modx->getObject('modRedirect', array(
-                "(`modRedirect`.`pattern` = '".$search."' OR '".$search."' REGEXP `modRedirect`.`pattern`)",
+                "(`modRedirect`.`pattern` = '".$search."')",
                 "(`modRedirect`.`context_key` = '".$modx->context->get('key')."' OR `modRedirect`.`context_key` IS NULL OR `modRedirect`.`context_key` = '')",
                 'active' => true,
             ));
 
-            if ($redirect) {
+            // when not found, check a REGEX record..
+            // need to separate this one because of some 'alias.html > target.html' vs. 'best-alias.html > best-target.html' issues...
+            if(empty($redirect) || !is_object($redirect)) {
+                $redirect = $modx->getObject('modRedirect', array(
+                    "('".$search."' REGEXP `modRedirect`.`pattern` OR '".$search."' REGEXP CONCAT('^', `modRedirect`.`pattern`, '$'))",
+                    "(`modRedirect`.`context_key` = '".$modx->context->get('key')."' OR `modRedirect`.`context_key` IS NULL OR `modRedirect`.`context_key` = '')",
+                    'active' => true,
+                ));
+            }
+
+            if(!empty($redirect) && is_object($redirect)) {
+
                 $target = $redirect->get('target');
                 $modx->parser->processElementTags('', $target, true, true);
+
                 if ($target != $modx->resourceIdentifier && $target != $search) {
                     if (strpos($target, '$') !== false) {
                         $pattern = $redirect->get('pattern');
@@ -70,6 +52,8 @@ switch($eventName) {
                         $target = $modx->getOption('site_url').$target;
                     }
                     $modx->log(modX::LOG_LEVEL_INFO, 'Redirector plugin redirecting request for ' . $search . ' to ' . $target);
+
+                    $redirect->registerTrigger();
 
                     $options = array('responseCode' => 'HTTP/1.1 301 Moved Permanently');
                     $modx->sendRedirect($target, $options);

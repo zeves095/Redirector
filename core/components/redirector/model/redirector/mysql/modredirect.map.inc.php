@@ -9,6 +9,9 @@ $xpdo_meta_map['modRedirect']= array (
     'pattern' => '',
     'target' => '',
     'context_key' => NULL,
+    'triggered' => 0,
+    'triggered_first' => NULL,
+    'triggered_last' => NULL,
     'active' => 1,
   ),
   'fieldMeta' => 
@@ -39,6 +42,28 @@ $xpdo_meta_map['modRedirect']= array (
       'null' => true,
       'default' => NULL,
       'index' => 'index',
+    ),
+    'triggered' => 
+    array (
+      'dbtype' => 'int',
+      'precision' => '11',
+      'phptype' => 'integer',
+      'null' => false,
+      'default' => 0,
+    ),
+    'triggered_first' => 
+    array (
+      'dbtype' => 'timestamp',
+      'phptype' => 'datetime',
+      'null' => true,
+      'default' => NULL,
+    ),
+    'triggered_last' => 
+    array (
+      'dbtype' => 'timestamp',
+      'phptype' => 'datetime',
+      'null' => true,
+      'default' => NULL,
     ),
     'active' => 
     array (

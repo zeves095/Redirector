@@ -37,7 +37,7 @@ Redi.grid.Redirects = function(config) {
         id: 'redirector-grid-redirects'
         ,url: Redi.config.connector_url
         ,baseParams: { action: 'mgr/redirect/getList' }
-        ,fields: ['id','pattern','target','context_key','valid','failure_msg','active']
+        ,fields: ['id','pattern','target','context_key','triggered','triggered_first','triggered_last','valid','failure_msg','active']
         ,save_action: 'mgr/redirect/updateFromGrid'
         ,save_callback: function(r) {
             if(!r.success) {
@@ -83,6 +83,20 @@ Redi.grid.Redirects = function(config) {
             ,sortable: true
             ,width: 50
             ,editor: { xtype: 'redirector-combo-contextlist' }
+        },{
+            header: _('redirector.triggered')
+            ,dataIndex: 'triggered'
+            ,sortable: true
+            ,width: 50
+        },{
+            header: _('redirector.triggered_first')
+            ,dataIndex: 'triggered_first'
+            ,sortable: true
+            ,hidden: true
+        },{
+            header: _('redirector.triggered_last')
+            ,dataIndex: 'triggered_last'
+            ,sortable: true
         },cb]
         ,tbar: [{
             text: _('redirector.redirect_create')
