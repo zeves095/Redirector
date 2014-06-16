@@ -314,6 +314,7 @@ Redi.window.CreateUpdateRedirect = function(config) {
                         layout: 'form'
                         ,columnWidth: .4
                         ,defaults: { msgTarget: 'under' ,border: false }
+                        ,style: 'margin: 0;'
                         ,items: [{
                             xtype: 'redirector-combo-resourcelist'
                             ,fieldLabel: _('resource')
