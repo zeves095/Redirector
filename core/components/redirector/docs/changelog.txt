@@ -1,5 +1,11 @@
 Changelog file for Redirector component.
 
+Redirector 2.0.6
+====================================
+- 
+- Fixed: new/update redirect resource box margin set to 0.
+- [#23] Fixed: redirect raw data import doesn't work
+
 Redirector 2.0.5
 ====================================
 - Fixed: plugin not checking URL extension any more, it should redirect based on whole URL data.

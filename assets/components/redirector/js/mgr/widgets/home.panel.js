@@ -105,25 +105,27 @@ Ext.extend(Redi.panel.Home, MODx.FormPanel, {
                     }
                 }
             },{
-                 xtype: 'button'
+                xtype: 'button'
                 ,id: 'redirector-import-do-button'
                 ,text: _('redirector.import.do')
                 ,anchor: 'auto'
                 ,disabled: true
-                ,handler: function() {
-                    var formObj = Ext.getCmp('redirector-import-formpanel');
-                    if(formObj.isValid()) {
-                        formObj.getForm().submit({
-                            waitMsg: config.saveMsg || _('redirector.import.doing')
-                            ,scope: this
-                            ,failure: function(form, response) {
-                                Ext.MessageBox.alert(_('redirector.import'), response.result.message);
-                            }
-                            ,success: function(form, response) {
-                                Ext.MessageBox.alert(_('redirector.import'), response.result.message);
-                            }
-                        });
-                    }
+                ,listeners: {
+                    'click': { fn: function() {
+                        var formObj = Ext.getCmp('redirector-import-formpanel').getForm();
+                        if(formObj.isValid()) {
+                            formObj.submit({
+                                waitMsg: config.saveMsg || _('redirector.import.doing')
+                                ,scope: this
+                                ,failure: function(form, response) {
+                                    Ext.MessageBox.alert(_('redirector.import'), response.result.message);
+                                }
+                                ,success: function(form, response) {
+                                    Ext.MessageBox.alert(_('redirector.import'), response.result.message);
+                                }
+                            });
+                        }
+                    } ,scope: this }
                 }
             }]
         });
