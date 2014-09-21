@@ -31,11 +31,35 @@ switch($eventName) {
             // when not found, check a REGEX record..
             // need to separate this one because of some 'alias.html > target.html' vs. 'best-alias.html > best-target.html' issues...
             if(empty($redirect) || !is_object($redirect)) {
-                $redirect = $modx->getObject('modRedirect', array(
-                    "('".$search."' REGEXP `modRedirect`.`pattern` OR '".$search."' REGEXP CONCAT('^', `modRedirect`.`pattern`, '$'))",
+//                $redirect = $modx->getObject('modRedirect', array(
+//                    "('".$search."' REGEXP `modRedirect`.`pattern` OR '".$search."' REGEXP CONCAT('^', `modRedirect`.`pattern`, '$'))",
+//                    "(`modRedirect`.`context_key` = '".$modx->context->get('key')."' OR `modRedirect`.`context_key` IS NULL OR `modRedirect`.`context_key` = '')",
+//                    'active' => true,
+//                ));
+                // get all redirects from database that contain * [ ] . ?
+                // this is preventing any security issues
+                $where = array(
+                    array( // this is just to reduce the amount of records to run through
+                        "pattern:LIKE" => "%*%",
+                        "OR:pattern:LIKE" => "%[%",
+                        "OR:pattern:LIKE" => "%]%",
+                        "OR:pattern:LIKE" => "%(%",
+                        "OR:pattern:LIKE" => "%)%",
+                        "OR:pattern:LIKE" => "%?%"
+                    ),
                     "(`modRedirect`.`context_key` = '".$modx->context->get('key')."' OR `modRedirect`.`context_key` IS NULL OR `modRedirect`.`context_key` = '')",
-                    'active' => true,
-                ));
+                    'active' => true
+                );
+                $q = $modx->newQuery('modRedirect');
+                $q->where($where);
+                $col = $modx->getCollection('modRedirect', $q);
+                foreach($col as $pattern) {
+                    $pat = $pattern->get('pattern');
+                    if(preg_match("~$pat~", $search, $matches)){
+                    $redirect = $pattern;
+                        break;
+                    }
+                }
             }
 
             if(!empty($redirect) && is_object($redirect)) {
@@ -64,29 +88,29 @@ switch($eventName) {
     break;
 
     case 'OnDocFormRender':
-        
+
         $track_uri_updates = $modx->getOption('redirector.track_uri_updates', null, true);
         if ($mode == 'upd' && $track_uri_updates) {
             $_SESSION['modx_resource_uri'] = $resource->get('uri');
         }
-        
+
     break;
 
     case 'OnDocFormSave':
-        
+
         /* if uri has changed, add to redirects */
         $track_uri_updates = $modx->getOption('redirector.track_uri_updates', null, true);
         $context_key = $resource->get('context_key');
         $new_uri = $resource->get('uri');
-        
+
         if ($mode == 'upd' && $track_uri_updates) {
             $old_uri = $_SESSION['modx_resource_uri'];
             if ($old_uri != $new_uri) {
-                
+
                 /* uri changed */
                 $redirect = $modx->getObject('modRedirect', array('pattern' => $old_uri, 'context_key' => $context_key, 'active' => true));
                 if (empty($redirect)) {
-                    
+
                     /* no record for old uri */
                     $new_redirect = $modx->newObject('modRedirect');
                     $new_redirect->fromArray(array(
@@ -95,16 +119,16 @@ switch($eventName) {
                         'context_key' => $context_key,
                         'active' => true,
                     ));
-                    
+
                     if ($new_redirect->save() == false) {
                         return $modx->error->failure($modx->lexicon('redirector.redirect_err_save'));
                     }
                 }
             }
-            
+
             $_SESSION['modx_resource_uri'] = $new_uri;
         }
-        
+
     break;
 }
 
