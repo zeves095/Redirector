@@ -2,6 +2,7 @@ Changelog file for Redirector component.
 
 Redirector 2.0.6
 ====================================
+- New feature: [#31] Add a "View Redirect" option
 - Fixed: [#33] Double slashes in redirect
 - Fixed: [#43] Cannot set redirect for an existing, unpublished Resource (uri)
 - Fixed: [#44] Undefined lexicon: redirect_err_ae_resource

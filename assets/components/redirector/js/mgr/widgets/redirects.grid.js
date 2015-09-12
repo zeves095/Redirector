@@ -185,6 +185,9 @@ Ext.extend(Redi.grid.Redirects,MODx.grid.Grid,{
     ,getMenu: function(g,ri) {
 		var m = [];
         m.push({
+            text: _('redirector.redirect_view')
+            ,handler: this.viewRedirect
+        },{
             text: _('redirector.redirect_update')
             ,handler: this.updateRedirect
         },'-',{
@@ -219,6 +222,23 @@ Ext.extend(Redi.grid.Redirects,MODx.grid.Grid,{
                 'success': {fn: function(r) {
                     Ext.getCmp('redirector-grid-redirects').getStore().commitChanges();
                 },scope: this}
+            }
+        });
+    }
+    ,viewRedirect: function(btn,e) {
+
+        /* send ajax request to update the data */
+        MODx.Ajax.request({
+            url: Redi.config.connector_url
+            ,params: {
+                action : 'mgr/redirect/getUrl'
+                ,id: this.menu.record.id
+            }
+            ,method: 'GET'
+            ,listeners: {
+                'success': { fn: function(r) {
+                    window.open(r.results.uri, '_blank');
+                } ,scope: this }
             }
         });
     }

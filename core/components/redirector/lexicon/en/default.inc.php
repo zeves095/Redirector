@@ -24,6 +24,7 @@ $_lang['redirector.redirect_create'] = 'Create New Redirect';
 $_lang['redirector.redirect_remove'] = 'Remove Redirect';
 $_lang['redirector.redirect_remove_confirm'] = 'Are you sure you want to remove this redirect?';
 $_lang['redirector.redirect_update'] = 'Update Redirect';
+$_lang['redirector.redirect_view'] = 'View Redirect';
 $_lang['redirector.redirects'] = 'Redirects';
 $_lang['redirector.management'] = 'Redirects Management';
 $_lang['redirector.menu_desc'] = 'Manage your redirects.';
