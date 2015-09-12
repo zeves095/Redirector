@@ -39,7 +39,7 @@ class RedirectorGetListProcessor extends modObjectGetListProcessor {
         $arr['valid'] = true;
 
         // find out if pattern URI exists
-        $criteria = array('uri' => $object->get('pattern'));
+        $criteria = array('uri' => $object->get('pattern'), 'published' => true, 'deleted' => false);
         if(!empty($arr['context_key'])) {
             $criteria['context_key'] = $object->get('context_key');
         }

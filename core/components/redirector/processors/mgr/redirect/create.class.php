@@ -24,7 +24,7 @@ class RedirectorCreateProcessor extends modObjectCreateProcessor {
         }
 
         // check if pattern is an existing resource
-        $criteria = array('uri' => $this->getProperty('pattern'));
+        $criteria = array('uri' => $this->getProperty('pattern'), 'published' => true, 'deleted' => false);
         if(!empty($context)) { $criteria['context_key'] = $context; }
         $resource = $this->modx->getObject('modResource', $criteria);
         if(!empty($resource) && is_object($resource)) {
