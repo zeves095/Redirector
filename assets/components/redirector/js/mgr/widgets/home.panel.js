@@ -1,8 +1,7 @@
 Redi.panel.Home = function(config) {
     config = config || {};
     Ext.apply(config,{
-        border: false
-        ,id: 'redirector-import-formpanel'
+        id: 'redirector-import-formpanel'
 
         ,url: Redi.config.connectorUrl
         ,baseParams: {
@@ -12,37 +11,30 @@ Redi.panel.Home = function(config) {
 
         ,baseCls: 'modx-formpanel'
         ,cls: 'container'
+        ,bodyStyle: ''
+        ,border: false
+
         ,items: [{
             html: '<h2>'+_('redirector.management')+'</h2>'
             ,border: false
             ,cls: 'modx-page-header'
-        },{
-            xtype: 'modx-tabs'
+        },MODx.getPageStructure([{
+            title: _('redirector.redirects')
             ,defaults: { border: false ,autoHeight: true }
-            ,border: true
-            ,stateful: true
-            ,stateId: 'redirector-home-tabpanel'
-            ,stateEvents: ['tabchange']
-            ,getState:function() {
-                return {activeTab:this.items.indexOf(this.getActiveTab())};
-            }
             ,items: [{
-                title: _('redirector.redirects')
-                ,defaults: { border: false ,autoHeight: true }
-                ,items: [{
-                    html: '<p>'+_('redirector.desc')+'</p>'
-                    ,bodyCssClass: 'panel-desc'
-                },{
-                    xtype: 'redirector-grid-redirects'
-                    ,cls: 'main-wrapper'
-                    ,preventRender: true
-                }]
+                html: '<p>'+_('redirector.desc')+'</p>'
+                ,bodyCssClass: 'panel-desc'
             },{
-                title: _('redirector.import')
-                ,defaults: { border: false ,autoHeight: true }
-                ,items: this.getImportPanelItems(config)
+                xtype: 'redirector-grid-redirects'
+                ,cls: 'main-wrapper'
+                ,preventRender: true
             }]
+        },{
+            title: _('redirector.import')
+            ,defaults: { border: false ,autoHeight: true }
+            ,items: this.getImportPanelItems(config)
         }]
+        )]
     });
     Redi.panel.Home.superclass.constructor.call(this,config);
 };
