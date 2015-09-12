@@ -1,6 +1,7 @@
 <?php
 /**
  * @package redirector
+ * @var string $mode
  */
 /* load redirector class */
 $corePath =  $modx->getOption('redirector.core_path',$scriptProperties,$modx->getOption('core_path').'components/redirector/');
@@ -31,35 +32,13 @@ switch($eventName) {
             // when not found, check a REGEX record..
             // need to separate this one because of some 'alias.html > target.html' vs. 'best-alias.html > best-target.html' issues...
             if(empty($redirect) || !is_object($redirect)) {
-//                $redirect = $modx->getObject('modRedirect', array(
-//                    "('".$search."' REGEXP `modRedirect`.`pattern` OR '".$search."' REGEXP CONCAT('^', `modRedirect`.`pattern`, '$'))",
-//                    "(`modRedirect`.`context_key` = '".$modx->context->get('key')."' OR `modRedirect`.`context_key` IS NULL OR `modRedirect`.`context_key` = '')",
-//                    'active' => true,
-//                ));
-                // get all redirects from database that contain * [ ] . ?
-                // this is preventing any security issues
-                $where = array(
-                    array( // this is just to reduce the amount of records to run through
-                        "pattern:LIKE" => "%*%",
-                        "OR:pattern:LIKE" => "%[%",
-                        "OR:pattern:LIKE" => "%]%",
-                        "OR:pattern:LIKE" => "%(%",
-                        "OR:pattern:LIKE" => "%)%",
-                        "OR:pattern:LIKE" => "%?%"
-                    ),
+                $c = $modx->newQuery('modRedirect');
+                $c->where(array(
+                    "(`modRedirect`.`pattern` = '".$search."' OR '".$search."' REGEXP `modRedirect`.`pattern` OR '".$search."' REGEXP CONCAT('^', `modRedirect`.`pattern`, '$'))",
                     "(`modRedirect`.`context_key` = '".$modx->context->get('key')."' OR `modRedirect`.`context_key` IS NULL OR `modRedirect`.`context_key` = '')",
-                    'active' => true
-                );
-                $q = $modx->newQuery('modRedirect');
-                $q->where($where);
-                $col = $modx->getCollection('modRedirect', $q);
-                foreach($col as $pattern) {
-                    $pat = $pattern->get('pattern');
-                    if(preg_match("~$pat~", $search, $matches)){
-                    $redirect = $pattern;
-                        break;
-                    }
-                }
+                    'active' => true,
+                ));
+                $redirect = $modx->getObject('modRedirect', $c);
             }
 
             if(!empty($redirect) && is_object($redirect)) {
