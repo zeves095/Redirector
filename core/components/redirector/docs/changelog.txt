@@ -3,7 +3,7 @@ Changelog file for Redirector component.
 Redirector 2.0.6
 ====================================
 - Fixed: Manager UI and fixed selecting a target resource URI parsing
-- Fixed: Added senseless where statement to the REGEX where statement, to avoid xPDO errors
+- Fixed: [#24] [#26] [#32] Added senseless where statement to the REGEX where statement, to avoid xPDO errors
 - Fixed: new/update redirect resource box margin set to 0.
 - [#23] Fixed: redirect raw data import doesn't work
 
