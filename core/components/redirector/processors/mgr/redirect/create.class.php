@@ -28,7 +28,7 @@ class RedirectorCreateProcessor extends modObjectCreateProcessor {
         if(!empty($context)) { $criteria['context_key'] = $context; }
         $resource = $this->modx->getObject('modResource', $criteria);
         if(!empty($resource) && is_object($resource)) {
-            $this->addFieldError('pattern', $this->modx->lexicon('redirector.redirect_err_ae_resource', array('id' => $resource->get('id'), 'context' => $resource->get('context_key'))));
+            $this->addFieldError('pattern', $this->modx->lexicon('redirector.redirect_err_ae_uri', array('id' => $resource->get('id'), 'context' => $resource->get('context_key'))));
         }
 
         // check if target is a NON existing resource
