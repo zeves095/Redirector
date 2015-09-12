@@ -1,8 +1,11 @@
 <?php
 /**
  * @package redirector
+ *
+ * @var modX|xPDO $modx
  * @var string $mode
  */
+
 /* load redirector class */
 $corePath =  $modx->getOption('redirector.core_path',$scriptProperties,$modx->getOption('core_path').'components/redirector/');
 $redirector = $modx->getService('redirector','Redirector',$corePath.'model/redirector/',$scriptProperties);
