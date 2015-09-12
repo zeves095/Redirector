@@ -32,6 +32,9 @@ $_lang['redirector.search...'] = 'Поиск...';
 $_lang['redirector.target'] = 'Цель';
 $_lang['redirector.context'] = 'Контекст';
 $_lang['redirector.context_desc'] = 'Если контекст указан, редирект будет работать только когда загружен указанный контекст.';
+$_lang['redirector.triggered'] = 'Triggered';
+$_lang['redirector.triggered_first'] = 'First time triggered';
+$_lang['redirector.triggered_last'] = 'Last time triggered';
 
 $_lang['redirector.import'] = 'Импорт CSV';
 $_lang['redirector.import_desc'] = 'Здесь вы можете импортировать новые правила в формате CSV. Вы можете загрузить CSV файл или вставить CSV данные в текстовую область.';

@@ -31,6 +31,9 @@ $_lang['redirector.search...'] = 'Zoeken...';
 $_lang['redirector.target'] = 'Doel';
 $_lang['redirector.context'] = 'Context';
 $_lang['redirector.context_desc'] = 'Als context ingesteld is, zal de redirect alleen plaatsvinden als deze geladen is.';
+$_lang['redirector.triggered'] = 'Getriggerd';
+$_lang['redirector.triggered_first'] = 'Eerst getriggerd op';
+$_lang['redirector.triggered_last'] = 'Laatst getriggerd op';
 
 $_lang['redirector.import'] = 'Importeer CSV';
 $_lang['redirector.import_desc'] = 'Hier kunt u nieuwe verwijs regels importeren middels CSV formaat. U kunt een CSV bestand uploaden of ruwe CSV in het textveld hieronder plaatsen.';

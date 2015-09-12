@@ -14,7 +14,7 @@ set_time_limit(0);
 /* define package names */
 define('PKG_NAME','Redirector');
 define('PKG_NAME_LOWER','redirector');
-define('PKG_VERSION','2.0.4');
+define('PKG_VERSION','2.0.6');
 define('PKG_RELEASE','pl');
 
 /* define build paths */

@@ -42,6 +42,8 @@ $generator->parseSchema($sources['schema_file'], $sources['model']);
 $modx->addPackage(PKG_NAME_LOWER, $sources['model']);
 $manager->createObjectContainer('modRedirect');
 
-//$manager->addField('modRedirect', 'context_key', array('after' => 'target'));
+//$manager->addField('modRedirect', 'triggered', array('after' => 'context_key'));
+//$manager->addField('modRedirect', 'triggered_first', array('after' => 'triggered'));
+//$manager->addField('modRedirect', 'triggered_last', array('after' => 'triggered_first'));
 //$manager->addIndex('modRedirect', 'pattern_context');
 //$manager->removeIndex('modRedirect', 'pattern_context');
