@@ -52,7 +52,7 @@ switch($eventName) {
                         $target = preg_replace('/'.$pattern.'/', $target, $search);
                     }
                     if (!strpos($target, '://')) {
-                        $target = $modx->getOption('site_url').$target;
+                        $target = $modx->getOption('site_url').(($target == '/') ? '' : $target);
                     }
                     $modx->log(modX::LOG_LEVEL_INFO, 'Redirector plugin redirecting request for ' . $search . ' to ' . $target);
 
