@@ -46,6 +46,12 @@ switch($eventName) {
 
             if(!empty($redirect) && is_object($redirect)) {
 
+                /** @var modContext $context */
+                $context = $redirect->getOne('Context');
+                if (empty($context) || !($context instanceof modContext)) {
+                    $context = $modx->context;
+                }
+
                 $target = $redirect->get('target');
                 $modx->parser->processElementTags('', $target, true, true);
 
@@ -55,7 +61,7 @@ switch($eventName) {
                         $target = preg_replace('/'.$pattern.'/', $target, $search);
                     }
                     if (!strpos($target, '://')) {
-                        $target = $modx->getOption('site_url').(($target == '/') ? '' : $target);
+                        $target = rtrim($context->getOption('site_url'),  '/') . '/' . (($target == '/') ? '' : ltrim($target,  '/'));
                     }
                     $modx->log(modX::LOG_LEVEL_INFO, 'Redirector plugin redirecting request for ' . $search . ' to ' . $target);
 

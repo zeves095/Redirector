@@ -2,6 +2,7 @@ Changelog file for Redirector component.
 
 Redirector 2.0.6
 ====================================
+- Fixed: [#33] Double slashes in redirect
 - Fixed: [#43] Cannot set redirect for an existing, unpublished Resource (uri)
 - Fixed: [#44] Undefined lexicon: redirect_err_ae_resource
 - Fixed: [#47] Support for MODX link tags and prepend whole site-url
