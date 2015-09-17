@@ -353,13 +353,17 @@ Redi.window.CreateUpdateRedirect = function(config) {
                             ,id: 'redirector-createupdate-window-resourcelist-' + this.ident
                             ,fieldLabel: _('resource')
                             ,valueField: 'uri'
-                            ,fields: ['uri', 'pagetitle', 'url', 'context_key']
+                            ,fields: ['uri', 'pagetitle', 'site_start']
                             ,anchor: '100%'
                             ,listeners: {
                                 'select': {
                                     fn: function(cb, e) {
                                         var v = cb.getValue();
-                                        if (!v || v == 'index.html') { v = '/'; }
+
+                                        var record = cb.findRecord('uri', v),
+                                            siteStart = record.get('site_start');
+                                        if (siteStart) { v = '/'; }
+
                                         var targetField = Ext.getCmp('redirector-createupdate-window-target-'+this.ident);
                                             targetField.setValue(v);
                                     } ,scope: this
