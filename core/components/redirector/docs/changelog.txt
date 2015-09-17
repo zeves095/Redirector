@@ -1,8 +1,19 @@
 Changelog file for Redirector component.
 
+Redirector 2.0.7
+====================================
+- Fixed: tracking URI changes, only when setting "redirector.track_uri_updates" is enabled (true, 1, yes, y.. etc.)
+
 Redirector 2.0.6
 ====================================
-- 
+- New feature: [#31] Add a "View Redirect" option
+- Fixed: [#33] Double slashes in redirect
+- Fixed: [#43] Cannot set redirect for an existing, unpublished Resource (uri)
+- Fixed: [#44] Undefined lexicon: redirect_err_ae_resource
+- Fixed: [#47] Support for MODX link tags and prepend whole site-url
+- Fixed: [#48] Problems with cyrillic URLs
+- Fixed: Manager UI and fixed selecting a target resource URI parsing
+- Fixed: [#24] [#26] [#32] [#46] Added senseless where statement to the REGEX where statement, to avoid xPDO errors
 - Fixed: new/update redirect resource box margin set to 0.
 - [#23] Fixed: redirect raw data import doesn't work
 

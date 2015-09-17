@@ -100,6 +100,7 @@ Redi.grid.Redirects = function(config) {
         },cb]
         ,tbar: [{
             text: _('redirector.redirect_create')
+            ,cls: 'primary-button'
             ,handler: { xtype: 'redirector-window-redirect-createupdate' ,blankValues: true ,update: false }
         },'->',{
             xtype: 'redirector-combo-contextlist'
@@ -184,6 +185,9 @@ Ext.extend(Redi.grid.Redirects,MODx.grid.Grid,{
     ,getMenu: function(g,ri) {
 		var m = [];
         m.push({
+            text: _('redirector.redirect_view')
+            ,handler: this.viewRedirect
+        },{
             text: _('redirector.redirect_update')
             ,handler: this.updateRedirect
         },'-',{
@@ -218,6 +222,23 @@ Ext.extend(Redi.grid.Redirects,MODx.grid.Grid,{
                 'success': {fn: function(r) {
                     Ext.getCmp('redirector-grid-redirects').getStore().commitChanges();
                 },scope: this}
+            }
+        });
+    }
+    ,viewRedirect: function(btn,e) {
+
+        /* send ajax request to update the data */
+        MODx.Ajax.request({
+            url: Redi.config.connector_url
+            ,params: {
+                action : 'mgr/redirect/getUrl'
+                ,id: this.menu.record.id
+            }
+            ,method: 'GET'
+            ,listeners: {
+                'success': { fn: function(r) {
+                    window.open(r.results.uri, '_blank');
+                } ,scope: this }
             }
         });
     }
@@ -272,6 +293,7 @@ Redi.window.CreateUpdateRedirect = function(config) {
         ,baseParams: { action: ((config.update) ? 'mgr/redirect/update' : 'mgr/redirect/create') }
         ,modal: true
         ,width: 750
+        ,autoHeight: true
         ,fields: [{
             xtype: 'hidden'
             ,name: 'id'
@@ -298,6 +320,7 @@ Redi.window.CreateUpdateRedirect = function(config) {
                     layout: 'column'
                     ,border: false
                     ,defaults: { msgTarget: 'under' ,border: false }
+                    ,style: 'padding-top:8px;'
                     ,items: [{
                         layout: 'form'
                         ,columnWidth: .6
@@ -314,7 +337,6 @@ Redi.window.CreateUpdateRedirect = function(config) {
                         layout: 'form'
                         ,columnWidth: .4
                         ,defaults: { msgTarget: 'under' ,border: false }
-                        ,style: 'margin: 0;'
                         ,items: [{
                             xtype: 'redirector-combo-resourcelist'
                             ,fieldLabel: _('resource')
@@ -324,8 +346,10 @@ Redi.window.CreateUpdateRedirect = function(config) {
                             ,listeners: {
                                 'select': {
                                     fn: function(cb, e) {
+                                        var v = cb.getValue();
+                                        if (!v || v == 'index.html') { v = '/'; }
                                         var targetField = Ext.getCmp('redirector-createupdate-window-target-'+this.ident);
-                                            targetField.setValue(cb.getValue());
+                                            targetField.setValue(v);
                                     } ,scope: this
                                 }
                             }
