@@ -313,9 +313,20 @@ Redi.window.CreateUpdateRedirect = function(config) {
                     ,allowBlank: false
                 },{
                     xtype: 'redirector-combo-contextlist'
+                    ,id: 'redirector-createupdate-window-contextlist-' + this.ident
                     ,fieldLabel: _('redirector.context')
                     ,name: 'context_key'
                     ,anchor: '100%'
+                    ,listeners: {
+                        'select': {
+                            fn: function(cb, e) {
+                                var resourceList = Ext.getCmp('redirector-createupdate-window-resourcelist-' + this.ident);
+                                var s = resourceList.getStore();
+                                    s.baseParams.cntx = cb.getValue();
+                                    s.load();
+                            } ,scope: this
+                        }
+                    }
                 },{
                     layout: 'column'
                     ,border: false
@@ -339,15 +350,20 @@ Redi.window.CreateUpdateRedirect = function(config) {
                         ,defaults: { msgTarget: 'under' ,border: false }
                         ,items: [{
                             xtype: 'redirector-combo-resourcelist'
+                            ,id: 'redirector-createupdate-window-resourcelist-' + this.ident
                             ,fieldLabel: _('resource')
                             ,valueField: 'uri'
-                            ,fields: ['uri','pagetitle']
+                            ,fields: ['uri', 'pagetitle', 'site_start']
                             ,anchor: '100%'
                             ,listeners: {
                                 'select': {
                                     fn: function(cb, e) {
                                         var v = cb.getValue();
-                                        if (!v || v == 'index.html') { v = '/'; }
+
+                                        var record = cb.findRecord('uri', v),
+                                            siteStart = record.get('site_start');
+                                        if (siteStart) { v = '/'; }
+
                                         var targetField = Ext.getCmp('redirector-createupdate-window-target-'+this.ident);
                                             targetField.setValue(v);
                                     } ,scope: this

@@ -65,11 +65,9 @@ switch ($eventName) {
                         $target = preg_replace('/' . $pattern . '/', $target, $search);
                     }
                     if (!strpos($target, '://')) {
-                        $target = rtrim($context->getOption('site_url'),
-                                '/') . '/' . (($target == '/') ? '' : ltrim($target, '/'));
+                        $target = rtrim($context->getOption('site_url'), '/') . '/' . (($target == '/') ? '' : ltrim($target, '/'));
                     }
-                    $modx->log(modX::LOG_LEVEL_INFO,
-                        'Redirector plugin redirecting request for ' . $search . ' to ' . $target);
+                    $modx->log(modX::LOG_LEVEL_INFO, 'Redirector plugin redirecting request for ' . $search . ' to ' . $target);
 
                     $redirect->registerTrigger();
 
