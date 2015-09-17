@@ -2,6 +2,7 @@ Changelog file for Redirector component.
 
 Redirector 2.0.7
 ====================================
+- Fixed: contexts combo vs resources list, to filter resources that only belongs to selected context
 - Fixed: tracking URI changes, only when setting "redirector.track_uri_updates" is enabled (true, 1, yes, y.. etc.)
 
 Redirector 2.0.6

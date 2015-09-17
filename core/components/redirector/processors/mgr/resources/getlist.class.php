@@ -9,6 +9,13 @@ class ResourcesGetListProcessor extends modObjectGetListProcessor {
 
     public function prepareQueryBeforeCount(xPDOQuery $c) {
 
+		$contextKey = $this->getProperty('cntx');
+		if(!empty($contextKey)) {
+			$c->andCondition(array(
+				'context_key' => $contextKey,
+			));
+		}
+
 		$query = $this->getProperty('query');
 		if(!empty($query)) {
 			$c->andCondition(array(
