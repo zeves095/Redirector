@@ -1,7 +1,8 @@
 Redi.panel.Home = function(config) {
     config = config || {};
     Ext.apply(config,{
-        id: 'redirector-import-formpanel'
+        border: false
+        ,id: 'redirector-import-formpanel'
 
         ,url: Redi.config.connectorUrl
         ,baseParams: {
@@ -11,16 +12,16 @@ Redi.panel.Home = function(config) {
 
         ,baseCls: 'modx-formpanel'
         ,cls: 'container'
-        ,bodyStyle: ''
-        ,border: false
-
         ,items: [{
             html: '<h2>'+_('redirector.management')+'</h2>'
             ,border: false
             ,cls: 'modx-page-header'
         },MODx.getPageStructure([{
             title: _('redirector.redirects')
-            ,defaults: { border: false ,autoHeight: true }
+            ,defaults: {
+                border: false
+                ,autoHeight: true
+            }
             ,items: [{
                 html: '<p>'+_('redirector.desc')+'</p>'
                 ,bodyCssClass: 'panel-desc'
@@ -28,13 +29,13 @@ Redi.panel.Home = function(config) {
                 xtype: 'redirector-grid-redirects'
                 ,cls: 'main-wrapper'
                 ,preventRender: true
+                ,anchor: '100%'
             }]
         },{
             title: _('redirector.import')
             ,defaults: { border: false ,autoHeight: true }
             ,items: this.getImportPanelItems(config)
-        }]
-        )]
+        }])]
     });
     Redi.panel.Home.superclass.constructor.call(this,config);
 };
