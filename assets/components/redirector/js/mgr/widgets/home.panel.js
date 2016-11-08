@@ -18,6 +18,7 @@ Redi.panel.Home = function(config) {
             ,cls: 'modx-page-header'
         },MODx.getPageStructure([{
             title: _('redirector.redirects')
+            ,layout: 'anchor'
             ,defaults: {
                 border: false
                 ,autoHeight: true
