@@ -1,5 +1,9 @@
 <?php
 
+if (!class_exists('RedirectorManagerController')) {
+    require_once __DIR__ . '/index.class.php';
+}
+
 class RedirectorHomeManagerController extends RedirectorManagerController {
     public function process(array $scriptProperties = array()) {
 
