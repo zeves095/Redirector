@@ -5,11 +5,9 @@ if (!class_exists('RedirectorManagerController')) {
 }
 
 class RedirectorHomeManagerController extends RedirectorManagerController {
-    public function process(array $scriptProperties = array()) {
-
+    public function getPageTitle() {
+        return $this->modx->lexicon('redirector');
     }
-
-    public function getPageTitle() { return $this->modx->lexicon('redirector'); }
 
     public function loadCustomCssJs() {
         $this->addJavascript($this->redirector->config['jsUrl'].'mgr/utils/fileuploadfield.xtype.js');
@@ -24,5 +22,7 @@ class RedirectorHomeManagerController extends RedirectorManagerController {
         </script>');
     }
 
-    public function getTemplateFile() { return $this->redirector->config['templatesPath'].'home.tpl'; }
+    public function getTemplateFile() {
+        return $this->redirector->config['templatesPath'].'home.tpl';
+    }
 }
