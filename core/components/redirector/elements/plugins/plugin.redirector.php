@@ -28,10 +28,11 @@ switch ($eventName) {
 
         $search = ltrim($search, '/');
         if (!empty($search)) {
+            $searchEscape = $modx->quote($search);
 
             /** @var modRedirect $redirect */
             $redirect = $modx->getObject('modRedirect', array(
-                "(`modRedirect`.`pattern` = '" . $search . "')",
+                "(`modRedirect`.`pattern` = '" . $searchEscape . "')",
                 "(`modRedirect`.`context_key` = '" . $modx->context->get('key') . "' OR `modRedirect`.`context_key` IS NULL OR `modRedirect`.`context_key` = '')",
                 'active' => true,
             ));
@@ -41,7 +42,7 @@ switch ($eventName) {
             if (empty($redirect) || !is_object($redirect)) {
                 $c = $modx->newQuery('modRedirect');
                 $c->where(array(
-                    "(`modRedirect`.`pattern` = '" . $search . "' OR '" . $search . "' REGEXP `modRedirect`.`pattern` OR '" . $search . "' REGEXP CONCAT('^', `modRedirect`.`pattern`, '$'))",
+                    "(`modRedirect`.`pattern` = '" . $searchEscape . "' OR '" . $searchEscape . "' REGEXP `modRedirect`.`pattern` OR '" . $searchEscape . "' REGEXP CONCAT('^', `modRedirect`.`pattern`, '$'))",
                     "(`modRedirect`.`context_key` = '" . $modx->context->get('key') . "' OR `modRedirect`.`context_key` IS NULL OR `modRedirect`.`context_key` = '')",
                     'active' => true,
                 ));
