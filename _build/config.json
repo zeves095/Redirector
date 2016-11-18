@@ -1,0 +1,55 @@
+{
+  "name": "Redirector",
+  "lowCaseName": "redirector",
+  "description": "Handles your site redirects.",
+  "author": "Shaun McCormick",
+  "version": "2.0.8",
+  "package": {
+    "actions": [
+      {
+        "id": 1,
+        "controller": "index"
+      }
+    ],
+    "menus": [
+      {
+        "text": "redirector",
+        "description": "redirector.menu_desc",
+        "action": 1
+      }
+    ],
+    "elements": {
+      "plugins": [
+        {
+          "name": "Redirector",
+          "events": [
+            "OnPageNotFound",
+            "OnDocFormRender",
+            "OnDocFormSave"
+          ]
+        }
+      ]
+    },
+    "systemSettings": [
+      {
+        "key": "track_uri_updates",
+        "area": "manager",
+        "value": 0
+      }
+    ]
+  },
+  "database": {
+    "tables": [
+      "modRedirect"
+    ]
+  },
+  "build": {
+    "resolver": {
+      "before": [],
+      "after": [
+        "resolve.tables.php",
+        "resolve.dbchanges.php"
+      ]
+    }
+  }
+}
