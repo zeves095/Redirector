@@ -1,5 +1,9 @@
 Changelog file for Redirector component.
 
+Redirector 2.0.8
+====================================
+- Fixed: BlindSQL Injection
+
 Redirector 2.0.7
 ====================================
 - Improved: made combo list minimum width to 300px so pagetitle are readable without a maximized window (rtripault)

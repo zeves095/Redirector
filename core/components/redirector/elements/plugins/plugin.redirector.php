@@ -18,7 +18,6 @@ if (!($redirector instanceof Redirector)) {
 $eventName = $modx->event->name;
 switch ($eventName) {
     case 'OnPageNotFound':
-
         /* handle redirects */
         $search = rawurldecode($_SERVER['REQUEST_URI']);
         $baseUrl = $modx->getOption('base_url', null, MODX_BASE_URL);
@@ -32,7 +31,7 @@ switch ($eventName) {
 
             /** @var modRedirect $redirect */
             $redirect = $modx->getObject('modRedirect', array(
-                "(`modRedirect`.`pattern` = '" . $searchEscape . "')",
+                "(`modRedirect`.`pattern` = " . $searchEscape . ")",
                 "(`modRedirect`.`context_key` = '" . $modx->context->get('key') . "' OR `modRedirect`.`context_key` IS NULL OR `modRedirect`.`context_key` = '')",
                 'active' => true,
             ));
@@ -42,7 +41,7 @@ switch ($eventName) {
             if (empty($redirect) || !is_object($redirect)) {
                 $c = $modx->newQuery('modRedirect');
                 $c->where(array(
-                    "(`modRedirect`.`pattern` = '" . $searchEscape . "' OR '" . $searchEscape . "' REGEXP `modRedirect`.`pattern` OR '" . $searchEscape . "' REGEXP CONCAT('^', `modRedirect`.`pattern`, '$'))",
+                    "(`modRedirect`.`pattern` = " . $searchEscape . " OR " . $searchEscape . " REGEXP `modRedirect`.`pattern` OR " . $searchEscape . " REGEXP CONCAT('^', `modRedirect`.`pattern`, '$'))",
                     "(`modRedirect`.`context_key` = '" . $modx->context->get('key') . "' OR `modRedirect`.`context_key` IS NULL OR `modRedirect`.`context_key` = '')",
                     'active' => true,
                 ));
@@ -81,7 +80,6 @@ switch ($eventName) {
         break;
 
     case 'OnDocFormRender':
-
         $track_uri_updates = (boolean)$modx->getOption('redirector.track_uri_updates', null, 1);
         $track_uri_updates = (in_array($track_uri_updates, array(false, 'false', 0, '0', 'no', 'n'), true)) ? false : true;
 
@@ -92,7 +90,6 @@ switch ($eventName) {
         break;
 
     case 'OnDocFormSave':
-
         /* if uri has changed, add to redirects */
         $track_uri_updates = $modx->getOption('redirector.track_uri_updates', null, 1);
         $track_uri_updates = (in_array($track_uri_updates, array(false, 'false', 0, '0', 'no', 'n'), true)) ? false : true;
@@ -100,10 +97,8 @@ switch ($eventName) {
         $new_uri = $resource->get('uri');
 
         if ($mode == 'upd' && $track_uri_updates && !empty($_SESSION['modx_resource_uri'])) {
-
             $old_uri = $_SESSION['modx_resource_uri'];
             if ($old_uri != $new_uri) {
-
                 /* uri changed */
                 $redirect = $modx->getObject('modRedirect', array(
                     'pattern' => $old_uri,
@@ -111,7 +106,6 @@ switch ($eventName) {
                     'active' => true
                 ));
                 if (empty($redirect)) {
-
                     /* no record for old uri */
                     $new_redirect = $modx->newObject('modRedirect');
                     $new_redirect->fromArray(array(
