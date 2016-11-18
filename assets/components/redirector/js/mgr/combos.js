@@ -10,14 +10,16 @@ Redi.combo.ResourceList = function(config) {
 		typeAhead: true,
 		editable: true,
 		allowBlank: true,
-		autocomplete: true,
+		minListWidth: 300,
+		listAlign: ['tr-br?', [30, 0]],
+		pageSize: 20,
 		url: Redi.config.connector_url,
 		baseParams: {
             action: 'mgr/resources/getList',
 			combo: true
         }
     });
-	
+
     Redi.combo.ResourceList.superclass.constructor.call(this, config);
 };
 

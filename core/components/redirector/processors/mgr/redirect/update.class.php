@@ -18,7 +18,7 @@ class RedirectorUpdateProcessor extends modObjectUpdateProcessor {
         $context = $this->getProperty('context_key');
 
         // check if pattern is an existing resource
-        $criteria = array('uri' => $this->getProperty('pattern'));
+        $criteria = array('uri' => $this->getProperty('pattern'), 'published' => true, 'deleted' => false);
         if(!empty($context)) { $criteria['context_key'] = $context; }
         $resource = $this->modx->getObject('modResource', $criteria);
         if(!empty($resource) && is_object($resource)) {
@@ -30,11 +30,13 @@ class RedirectorUpdateProcessor extends modObjectUpdateProcessor {
         if(strpos($target, '$') === false) {
 
             // parse link & MODX tags
-            if(stripos($target, '[[') !== false) {
-                $this->modx->parser->processElementTags('', $target, true, true);
-            }
+            $this->modx->parser->processElementTags('', $target, true, true);
 
             if(!empty($target)) {
+
+                if (!strpos($target, '://')) {
+                    $target = $this->modx->getOption('site_url') . (($target == '/') ? '' : $target);
+                }
 
                 // checking full links
                 if(strpos($target, '://') !== false) {

@@ -1,5 +1,6 @@
 <?php
 
+/** @var modX|xPDO $modx */
 $modx =& $object->xpdo;
 
 $modx->log(xPDO::LOG_LEVEL_INFO, 'Making database changes.');
@@ -10,6 +11,7 @@ switch($options[xPDOTransport::PACKAGE_ACTION]) {
         $modelPath = $modx->getOption('redirector.core_path', null, $modx->getOption('core_path').'components/redirector/').'model/';
 		$modx->addPackage('redirector', $modelPath);
 
+        /** @var xPDOManager $manager */
         $manager = $modx->getManager();
 
         // to not report table creation in the console
@@ -21,6 +23,10 @@ switch($options[xPDOTransport::PACKAGE_ACTION]) {
         $manager->addIndex('modRedirect', 'pattern');
         $manager->addIndex('modRedirect', 'context_key');
         $manager->removeIndex('modRedirect', 'pattern_context');
+
+        $manager->addField('modRedirect', 'triggered', array('after' => 'context_key'));
+        $manager->addField('modRedirect', 'triggered_first', array('after' => 'triggered'));
+        $manager->addField('modRedirect', 'triggered_last', array('after' => 'triggered_first'));
 
         // set back console logging
         $modx->setLogLevel($oldLogLevel);
