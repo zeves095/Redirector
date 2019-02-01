@@ -45,6 +45,7 @@ switch ($eventName) {
                     "(`modRedirect`.`context_key` = '" . $modx->context->get('key') . "' OR `modRedirect`.`context_key` IS NULL OR `modRedirect`.`context_key` = '')",
                     'active' => true,
                 ));
+                $c->sortby('pattern', 'DESC'); // we need to get most long pattern
                 $redirect = $modx->getObject('modRedirect', $c);
             }
 
